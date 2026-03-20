@@ -3,7 +3,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const { loadConfig } = require('./src/config');
 const { createClient, handleMessage } = require('./src/bot');
-const { getClient: getSheetsClient } = require('./src/sheets');
+const { getClient: getSheetsClient, initSheets } = require('./src/sheets');
 const { startHealthServer } = require('./src/health');
 const { createTransport } = require('./src/mailer');
 
@@ -14,6 +14,8 @@ async function main() {
   const transport = createTransport(config);
 
   startHealthServer(config.healthPort);
+
+  await initSheets(sheetsClient, config.sheetsId);
 
   const client = createClient(config, transport);
   client.on('message_create', msg => handleMessage(msg, config, genAI, sheetsClient));
