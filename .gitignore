@@ -1,0 +1,8 @@
+node_modules/
+.env
+service-account.json
+.wwebjs_auth/
+failed.jsonl
+auth-failures.log
+.wwebjs_cache
+.DS_Store
